@@ -23,6 +23,4 @@ public class classtest {
         print = (Print) ac.getBean("print2");
         System.out.println(print.showInfo());
     }
-
-
 }

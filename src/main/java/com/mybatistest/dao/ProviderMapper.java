@@ -1,11 +1,14 @@
 package com.mybatistest.dao;
 
 import com.mybatistest.pojo.Provider;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
-
+@Repository
 public interface ProviderMapper {
     public List<Provider> selectAllProvider();
     public List<Provider> getProviderByName(String proName);
@@ -25,7 +28,7 @@ public interface ProviderMapper {
     public List<Provider> chooseSelect(Provider provider);
     public int selectCountAll();
     public List<Provider>selectByPage(Map<String, Object> params);
-
+    public int delete1ProviderByIds(int[] ids);
 
 
 }

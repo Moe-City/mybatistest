@@ -43,9 +43,9 @@
     </environments>
 
     <mappers>
-        <!--<mapper resource="com/mybatistest/dao/ProviderMapper.xml"/>-->
-        <!--<mapper url="file:///D:\webApp\kegongchang\mybatistest\src\com\mybatistest\dao\ProviderMapper.xml"/>-->
-        <package name="com.mybatistest.dao"/>
+        <!--<mapper resource="com/mybatistest/dao/ProviderMapper.xml.backup"/>-->
+        <!--<mapper url="file:///D:\webApp\kegongchang\mybatistest\src\com\mybatistest\dao\ProviderMapper.xml.backup"/>-->
+        <!--<package name="com.mybatistest.dao"/>-->
     </mappers>
 
 </configuration>

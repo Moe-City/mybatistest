@@ -6,11 +6,12 @@ import com.mybatistest.pojo.PageBean;
 import com.mybatistest.service.BillService;
 import com.mybatistest.util.MybatisUtil;
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+@Service("billService")
 public class BillServiceImpl implements BillService {
 
     @Override

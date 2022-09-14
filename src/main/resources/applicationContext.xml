@@ -2,10 +2,15 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/aop
-       http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+       http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <bean class="com.mybatistest.controller.day4.PaperA4" id="a4"/>
     <bean class="com.mybatistest.controller.day4.ColorInk" id="colorInk"/>
@@ -56,13 +61,54 @@
     <bean id="con4" class="com.mybatistest.controller.day5.conver.ConversationServiceImpl" p:man="Rod" p:statement="世界上有10种人，认识二进制的和不认识二进制的。"/>
 
     <!--test 3-->
-    <!--<bean id="aUser" class="com.mybatistest.controller.day5.user.User">
+    <bean id="aUser" class="com.mybatistest.controller.day5.user.User">
         <property name="username" value="user3"/>
     </bean>
-    <bean id="addUser" class="com.mybatistest.controller.day5.user.UserServiceImpl" p:user-ref="aUser"/>-->
+    <bean id="addUser" class="com.mybatistest.controller.day5.user.UserServiceImpl" p:user-ref="aUser"/>
 
     <!--test 4, 5, 6-->
     <context:component-scan base-package="com.mybatistest.controller.day5.user"/>
     <aop:aspectj-autoproxy/>
     <!--day5-->
+
+    <!--day6-->
+    <bean id="dateSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/smbmsdb?useUnicode=true&amp;characterEncoding=UTF-8&amp;serverTimezone=GMT%2B8"/>
+        <property name="username" value="root"/>
+        <property name="password" value="5201"/>
+    </bean>
+
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dateSource"/>
+        <property name="mapperLocations">
+            <list>
+                <value>classpath:xml/*</value>
+            </list>
+        </property>
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+    </bean>
+    <context:component-scan base-package="com.mybatistest.dao"/>
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.mybatistest.dao"/>
+    </bean>
+    <context:component-scan base-package="com.mybatistest.service"/>
+
+    <!--事务管理-->
+    <bean class="org.springframework.jdbc.datasource.DataSourceTransactionManager" id="txManager">
+        <property name="dataSource" ref="dateSource"/>
+    </bean>
+    <tx:advice id="txAdvice" transaction-manager="txManager">
+        <tx:attributes>
+            <tx:method name="get*" timeout="1" read-only="true"/>
+            <tx:method name="*" propagation="REQUIRED"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <aop:config>
+        <aop:pointcut id="allServiceImplMethod" expression="execution(* com.mybatistest.service.impl..*(..))"/>
+        <aop:advisor pointcut-ref="allServiceImplMethod" advice-ref="txAdvice" />
+    </aop:config>
+
+    <!--day6-->
 </beans>

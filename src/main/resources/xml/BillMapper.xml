@@ -15,7 +15,33 @@
             <result column="proName" property="proName"/>
         </association>
     </resultMap>
-    
+
+    <select id="selectBillById" resultType="Bill">
+        select * from smbms_bill where id = ${id}
+    </select>
+
+    <insert id="insertBill" parameterType="Bill">
+        insert into smbms_bill
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="billCode != null">
+                billCode,
+            </if>
+        </trim>
+        <trim prefix="value (" suffix=")" suffixOverrides=",">
+            <if test="billCode != null">
+                '${billCode}',
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateBillById" parameterType="Bill">
+        update smbms_bill set billCode = '${billCode}' where id = ${id}
+    </update>
+
+    <delete id="deleteBillById">
+        delete from smbms_bill where id = ${id}
+    </delete>
+
     <select id="selectAllBill" resultType="Bill">
         select * from smbms_bill
     </select>

@@ -8,24 +8,42 @@ import java.util.List;
 import java.util.Map;
 
 public interface ProviderService {
-    public List<Provider> selectAllProvider();
-    public List<Provider> getProviderByName(String proName);
-    public  Provider getProviderByid(int id);
-    public int modifyNameByParam(@Param("proName")String proName, @Param("id")int id);
-    public int modifyProvider(Provider provider);
-    public int add1Provider(Provider provider);
-    public int delete1ProviderByid(@Param("id")int id);
-    public Provider selectAllBillByProviderid(int id);
-    public List<Provider> dynamicSelect(Provider provider);
-    public int dynamicUpdate(Provider provider);
-    public List selectByIds(int[] ids);
-    public int dynamicUpdateTrim(Provider provider);
-    public List<Provider> selectAllBillByIds(int[] ids);
-    public List<Provider> selectAllBillByListIds(List list);
-    public List<Provider> selectALlBillByCodeAndIds(Map map);
-    public List<Provider> chooseSelect(Provider provider);
-    public int selectCountAll();
+    List<Provider> selectAllProvider();
+
+    List<Provider> getProviderByName(String proName);
+
+    Provider getProviderByid(int id);
+
+    int modifyNameByParam(@Param("proName") String proName, @Param("id") int id);
+
+    int modifyProvider(Provider provider);
+
+    int add1Provider(Provider provider);
+
+    int delete1ProviderByid(@Param("id") int id);
+
+    Provider selectAllBillByProviderid(int id);
+
+    List<Provider> dynamicSelect(Provider provider);
+
+    int dynamicUpdate(Provider provider);
+
+    List selectByIds(int[] ids);
+
+    int dynamicUpdateTrim(Provider provider);
+
+    List<Provider> selectAllBillByIds(int[] ids);
+
+    List<Provider> selectAllBillByListIds(List list);
+
+    List<Provider> selectALlBillByCodeAndIds(Map map);
+
+    List<Provider> chooseSelect(Provider provider);
+
+    int selectCountAll();
+
     //分页
-    public PageBean<Provider> providerByPage(int pageNow, int pageSize);
-    public int delete1ProviderByIds(int[] ids);
+    PageBean<Provider> providerByPage(int pageNow, int pageSize);
+
+    int delete1ProviderByIds(int[] ids);
 }

@@ -2,15 +2,20 @@ package com.mybatistest.dao;
 
 import com.mybatistest.pojo.Bill;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
 
 public interface BillMapper {
-    public List<Bill> selectAllBill();
-    public Bill getBillByNameIdPay(Map map);
-    public Bill showBillAndProvider(Map param);
-    public List<Bill> dynamicGetBill(Bill bill);
-    public int selectCountAll();
-    public List<Bill>selectByPage(Map<String, Object> params);
+    Bill selectBillById(@Param("id") Integer id);
+    int insertBill(Bill bill);
+    int updateBillById(@Param("billCode") String billCode, @Param("id") Integer id);
+    int deleteBillById(@Param("id") Integer id);
+    List<Bill> selectAllBill();
+    Bill getBillByNameIdPay(Map map);
+    Bill showBillAndProvider(Map param);
+    List<Bill> dynamicGetBill(Bill bill);
+    int selectCountAll();
+    List<Bill>selectByPage(Map<String, Object> params);
 }

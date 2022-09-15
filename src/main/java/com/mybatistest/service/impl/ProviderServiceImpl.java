@@ -7,6 +7,7 @@ import com.mybatistest.service.ProviderService;
 import com.mybatistest.util.MybatisUtil;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 @Service("providerService")
+@Scope("prototype")
 public class ProviderServiceImpl implements ProviderService {
 
     @Autowired

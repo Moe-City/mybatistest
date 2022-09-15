@@ -96,6 +96,11 @@
                 proCode,
             </if>
         </trim>
+        <trim prefix="value (" suffix=")" suffixOverrides=",">
+            <if test="proCode != null">
+                '${proCode}',
+            </if>
+        </trim>
     </insert>
 
     <update id="dynamicUpdateTrim">

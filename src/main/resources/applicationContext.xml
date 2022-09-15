@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
-       xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
        xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
@@ -9,36 +10,14 @@
        http://www.springframework.org/schema/aop/spring-aop.xsd
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context.xsd
-        http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx
        http://www.springframework.org/schema/tx/spring-tx.xsd">
+    <!--default-autowire="byName"--><!--默认自动byName装配，useless-->
+    <!--资源及配置文件配置-->
+    <import resource="spring-oldBeans.xml"/>
     <context:property-placeholder location="classpath:smbmsdb.properties" ignore-unresolvable="true"/>
-    <bean class="com.mybatistest.controller.day4.PaperA4" id="a4"/>
-    <bean class="com.mybatistest.controller.day4.ColorInk" id="colorInk"/>
-    <bean class="com.mybatistest.controller.day4.PaperB5" id="b5"/>
-    <bean class="com.mybatistest.controller.day4.BlackInk" id="blackInk"/>
-    <!--两个打印机-->
-    <bean id="print1" class="com.mybatistest.controller.day4.Print">
-        <property name="paper" ref="a4"/>
-        <property name="ink" ref="colorInk"/>
-    </bean>
-
-    <bean id="print2" class="com.mybatistest.controller.day4.Print">
-        <property name="paper" ref="b5"/>
-        <property name="ink" ref="blackInk"/>
-    </bean>
 
     <!--day4-->
-    <bean id="conversation1" class="com.mybatistest.controller.day4.mission.Conversation">
-        <property name="man" value="张嘎"/>
-        <property name="statement" value="三天不打小鬼子，手都痒痒！"/>
-    </bean>
-    <bean id="conversation2" class="com.mybatistest.controller.day4.mission.Conversation">
-        <property name="man" value="Rod"/>
-        <property name="statement" value="世界上有10种人，认识二进制的和不认识二进制的。"/>
-    </bean>
-
-    <bean id="myAspect" class="com.mybatistest.controller.day4.AOP.UserLoggerAop"/>
-    <bean id="user" class="com.mybatistest.controller.day4.AOP.userDao"/>
     <aop:config>
         <aop:aspect ref="myAspect">
             <aop:pointcut id="myPointcut" expression="execution(* com.mybatistest.controller.day4.AOP.*.*(..))"/>
@@ -48,25 +27,7 @@
     </aop:config>
     <!--day4-->
 
-    <!--day5-->
-    <bean id="con1" class="com.mybatistest.controller.day5.conver.ConversationServiceImpl">
-        <constructor-arg index="0" value="张嘎"/>
-        <constructor-arg index="1" value="三天不打小鬼子，手都痒痒！"/>
-    </bean>
-    <bean id="con2" class="com.mybatistest.controller.day5.conver.ConversationServiceImpl">
-        <constructor-arg index="0" value="Rod"/>
-        <constructor-arg index="1" value="世界上有10种人，认识二进制的和不认识二进制的。"/>
-    </bean>
-    <bean id="con3" class="com.mybatistest.controller.day5.conver.ConversationServiceImpl" p:man="张嘎" p:statement="三天不打小鬼子，手都痒痒！"/>
-    <bean id="con4" class="com.mybatistest.controller.day5.conver.ConversationServiceImpl" p:man="Rod" p:statement="世界上有10种人，认识二进制的和不认识二进制的。"/>
-
-    <!--test 3-->
-    <bean id="aUser" class="com.mybatistest.controller.day5.user.User">
-        <property name="username" value="user3"/>
-    </bean>
-    <bean id="addUser" class="com.mybatistest.controller.day5.user.UserServiceImpl" p:user-ref="aUser"/>
-
-    <!--test 4, 5, 6-->
+    <!--day5 test 4, 5, 6-->
     <context:component-scan base-package="com.mybatistest.controller.day5.user"/>
     <aop:aspectj-autoproxy/>
     <!--day5-->
@@ -88,11 +49,12 @@
         </property>
         <property name="configLocation" value="classpath:mybatis-config.xml"/>
     </bean>
-    <context:component-scan base-package="com.mybatistest.dao"/>
+
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com.mybatistest.dao"/>
     </bean>
     <context:component-scan base-package="com.mybatistest.service"/>
+    <context:component-scan base-package="com.mybatistest.dao"/>
 
     <!--事务管理-->
     <bean class="org.springframework.jdbc.datasource.DataSourceTransactionManager" id="txManager">
@@ -109,6 +71,27 @@
         <aop:pointcut id="allServiceImplMethod" expression="execution(* com.mybatistest.service.impl..*(..))"/>
         <aop:advisor pointcut-ref="allServiceImplMethod" advice-ref="txAdvice" />
     </aop:config>
-
     <!--day6-->
+
+    <!--day7-->
+    <!--JNDI, useless-->
+    <!--<bean id="dateSourceJNDI" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName">
+            <value>java:comp/env/jdbc/smbms</value>
+        </property>
+    </bean>-->
+    <!--自动装配，useless(已有注解自动装配）-->
+    <!--<bean id="providerService" class="com.mybatistest.service.impl.ProviderServiceImpl" autowire="byName" />-->
+    <!--day7-->
+
+    <!--MapperFactoryBean-->
+    <bean id="um2" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="com.mybatistest.dao.UserMapper"/>
+        <property name="sqlSessionFactory" ref="sqlSession"/>
+    </bean>
+
+    <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg ref="sqlSession" />
+    </bean>
+
 </beans>

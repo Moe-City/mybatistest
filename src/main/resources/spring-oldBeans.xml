@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean class="com.mybatistest.controller.day4.PaperA4" id="a4"/>
+    <bean class="com.mybatistest.controller.day4.ColorInk" id="colorInk"/>
+    <bean class="com.mybatistest.controller.day4.PaperB5" id="b5"/>
+    <bean class="com.mybatistest.controller.day4.BlackInk" id="blackInk"/>
+    <!--两个打印机-->
+    <bean id="print1" class="com.mybatistest.controller.day4.Print">
+        <property name="paper" ref="a4"/>
+        <property name="ink" ref="colorInk"/>
+    </bean>
+
+    <bean id="print2" class="com.mybatistest.controller.day4.Print">
+        <property name="paper" ref="b5"/>
+        <property name="ink" ref="blackInk"/>
+    </bean>
+
+    <!--day4-->
+    <bean id="conversation1" class="com.mybatistest.controller.day4.mission.Conversation">
+        <property name="man" value="张嘎"/>
+        <property name="statement" value="三天不打小鬼子，手都痒痒！"/>
+    </bean>
+    <bean id="conversation2" class="com.mybatistest.controller.day4.mission.Conversation">
+        <property name="man" value="Rod"/>
+        <property name="statement" value="世界上有10种人，认识二进制的和不认识二进制的。"/>
+    </bean>
+
+    <bean id="myAspect" class="com.mybatistest.controller.day4.AOP.UserLoggerAop"/>
+    <bean id="user" class="com.mybatistest.controller.day4.AOP.userDao"/>
+    <!--day4-->
+
+    <!--day5-->
+    <bean id="con1" class="com.mybatistest.controller.day5.conver.ConversationServiceImpl">
+        <constructor-arg index="0" value="张嘎"/>
+        <constructor-arg index="1" value="三天不打小鬼子，手都痒痒！"/>
+    </bean>
+    <bean id="con2" class="com.mybatistest.controller.day5.conver.ConversationServiceImpl">
+        <constructor-arg index="0" value="Rod"/>
+        <constructor-arg index="1" value="世界上有10种人，认识二进制的和不认识二进制的。"/>
+    </bean>
+    <bean id="con3" class="com.mybatistest.controller.day5.conver.ConversationServiceImpl" p:man="张嘎" p:statement="三天不打小鬼子，手都痒痒！"/>
+    <bean id="con4" class="com.mybatistest.controller.day5.conver.ConversationServiceImpl" p:man="Rod" p:statement="世界上有10种人，认识二进制的和不认识二进制的。"/>
+
+    <!--test 3-->
+    <bean id="aUser" class="com.mybatistest.controller.day5.user.User">
+        <property name="username" value="user3"/>
+    </bean>
+    <bean id="addUser" class="com.mybatistest.controller.day5.user.UserServiceImpl" p:user-ref="aUser"/>
+
+
+</beans>

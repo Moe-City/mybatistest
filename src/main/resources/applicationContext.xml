@@ -4,6 +4,7 @@
        xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/aop
@@ -15,6 +16,7 @@
     <!--default-autowire="byName"--><!--默认自动byName装配，useless-->
     <!--资源及配置文件配置-->
     <import resource="spring-oldBeans.xml"/>
+    <import resource="spring-web.xml"/>
     <context:property-placeholder location="classpath:smbmsdb.properties" ignore-unresolvable="true"/>
 
     <!--day4-->
@@ -93,5 +95,9 @@
     <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
         <constructor-arg ref="sqlSession" />
     </bean>
+
+    <!--day8-->
+
+    <!--day8-->
 
 </beans>
